@@ -1,2 +1,4 @@
-package com.example.kattehjemmesideprojektet.Controller;public class CatController {
+package com.example.kattehjemmesideprojektet.Controller;
+
+public class CatController {
 }

@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>opret bruger</title>
 </head>
 <body>
-$END$
+<h1>opret en ny bruger</h1>
+
+<form action ="#" th:action="@{/createUser}" th:object="${user}" method = "post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" th:field="*{user.username}"/>
+
+    <label for="password">Password:</label>
+    <input type="text" id="password" th:field="*{user.password}"/>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" th:field="*{user.email}"/>
+
+    <label for="phoneNumber">PhoneNumber:</label>
+    <input type="text" id="phoneNumber" th:field="*{user.phoneNumber}"/>
+
+    <button type="submit">Opret</button>
+</form>
+<a href="/createUser">Tilbage til listen</a>
 </body>
 </html>

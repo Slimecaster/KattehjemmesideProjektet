@@ -14,8 +14,8 @@ public class UserController {
     @Autowired
     private KattehjemmesideService kattehjemmesideService;
 
-    @GetMapping("/")
-    public String showCreateUser(Model model) {
+    @GetMapping("/createUser")
+    public String createUserForm(Model model) {
         model.addAttribute("createUser", new User());
         return "createUser";
     }

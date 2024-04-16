@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>opret kat</title>
+</head>
+<body>
+<h1>opret en ny kat</h1>
+
+<form action ="#" th:action="@{/createCat}" th:object="${createCat}" method = "post">
+
+    <label for="owner">Owner:</label>
+    <input type="number" id="owner" th:field="*{owner}"/>
+
+    <label for="race">Race:</label>
+    <input type="text" id="race" th:field="*{race}"/>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}"/>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" th:field="*{age}"/>
+
+    <label for="weight">Weight:</label>
+    <input type="number" id="weight" th:field="*{weight}"/>
+
+    <button type="submit">Opret</button>
+</form>
+<a href="/createCat">Tilbage til menuen</a>
+</body>
+</html>

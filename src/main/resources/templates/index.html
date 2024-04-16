@@ -1,10 +1,51 @@
+<!-- Denne HTML-fil anvender Thymeleaf-template engine for at gøre det muligt at integrere
+dynamiske data (som en liste over programmeringssprog) ind i HTML -->
+
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Liste over katte</title>
+    <!-- Grundlæggende opsætning med meta-tag og titel -->
 </head>
 <body>
+
+<h1>Katte</h1>
+
+<!-- Link til at tilføje et nyt sprog -->
+<a href="/createCat">Tilføj ny kat</a>
+
+<!-- Starten af tabellen for at vise programmeringssprog -->
+<table>
+    <thead>
+    <tr>
+        <!-- Kolonneoverskrifter for tabellen -->
+        <th>Race</th>
+        <th>Navn</th>
+        <th>Alder</th>
+        <th>Vægt</th>
+        <th>Ejer</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterer gennem sprogliste og vis hver sprog -->
+    <tr th:each="cat : ${cat}">
+        <!-- Viser værdier for hvert sprog fra listen -->
+        <td th:text="${race}">Race</td>
+        <td th:text="${name}">Navn</td>
+        <td th:number="${age}">Alder</td>
+        <td th:number="${weight}">Vægt</td>
+        <td th:number="${owner}">Ejer</td>
+        <td>
+            <!-- Link til at redigere et sprog -->
+            <a th:href="@{/language/edit/{id}(id=${language.id})}">Rediger</a>
+            <!-- Link til at slette et sprog -->
+            <a th:href="@{/language/delete/{id}(id=${language.id})}" onclick="return confirm('Er du sikker på, at du vil slette dette sprog?');">Slet</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
 </html>

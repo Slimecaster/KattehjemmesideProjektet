@@ -79,7 +79,6 @@ public class KattehjemmesideRepository {
     }
 
 
-
     private RowMapper<User> userRowMapper() {
         return (rs, rowNum) -> {
             User user = new User();

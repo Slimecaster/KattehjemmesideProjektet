@@ -31,7 +31,7 @@ public class CatController {
 
     @GetMapping("/")
     public String showAllCats(Model model) {
-        kattehjemmesideService.findAllCats();
+        model.addAttribute("cats", kattehjemmesideService.findAllCats());
         return "index";
     }
 

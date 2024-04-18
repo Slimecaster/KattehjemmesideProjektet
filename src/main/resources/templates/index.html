@@ -30,13 +30,13 @@ dynamiske data (som en liste over programmeringssprog) ind i HTML -->
     </thead>
     <tbody>
     <!-- Iterer gennem sprogliste og vis hver sprog -->
-    <tr th:each="cat : ${cat}">
+    <tr th:each="cat : ${cats}">
         <!-- Viser værdier for hvert sprog fra listen -->
-        <td th:text="${race}">Race</td>
-        <td th:text="${name}">Navn</td>
-        <td th:number="${age}">Alder</td>
-        <td th:number="${weight}">Vægt</td>
-        <td th:number="${owner}">Ejer</td>
+        <td th:text="${cat.race}">Race</td>
+        <td th:text="${cat.name}">Navn</td>
+        <td th:text="${cat.age}">Alder</td>
+        <td th:text="${cat.weight}">Vægt</td>
+        <td th:text="${cat.owner}">Ejer</td>
         <td>
             <!-- Link til at redigere et sprog -->
             <a th:href="@{/language/edit/{id}(id=${language.id})}">Rediger</a>

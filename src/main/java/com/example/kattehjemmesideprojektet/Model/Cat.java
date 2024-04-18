@@ -68,4 +68,16 @@ public class Cat {
     public void setOwner(int owner) {
         this.owner = owner;
     }
+
+    @Override
+    public String toString() {
+        return "Cat{" +
+                "catId=" + catId +
+                ", race='" + race + '\'' +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", weight=" + weight +
+                ", owner=" + owner +
+                '}';
+    }
 }

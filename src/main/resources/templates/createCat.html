@@ -2,30 +2,33 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>opret kat</title>
+    <title>Opret kat</title>
 </head>
 <body>
-<h1>opret en ny kat</h1>
+<h1>Opret en ny kat</h1>
 
 <form action ="#" th:action="@{/createCat}" th:object="${cat}" method = "post">
 
-    <label for="owner">Owner:</label>
+    <label for="owner">Ejer:</label>
     <input type="number" id="owner" th:field="*{owner}"/>
 
     <label for="race">Race:</label>
     <input type="text" id="race" th:field="*{race}"/>
 
-    <label for="name">Name:</label>
-    <input type="text" id="name" th:field="*{name}"/>
+    <label for="name">Navn:</label>
+    <input type="text" id="name" th:field="*{name}"
+           required minlength="2" maxlength="20"/>
 
-    <label for="age">Age:</label>
-    <input type="number" id="age" th:field="*{age}"/>
+    <label for="age">Alder (år):</label>
+    <input type="number" id="age" th:field="*{age}"
+            required min="0" max="40"/>
 
-    <label for="weight">Weight:</label>
-    <input type="number" id="weight" th:field="*{weight}"/>
+    <label for="weight">Vægt (kg):</label>
+    <input type="number" id="weight" th:field="*{weight}"
+            required min="0" max="20"/>
 
     <button type="submit">Opret</button>
 </form>
-<a href="/createCat">Tilbage til menuen</a>
+<a href="/">Tilbage til menuen</a>
 </body>
 </html>

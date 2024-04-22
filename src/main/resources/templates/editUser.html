@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rediger bruger</title>
+    <!-- Side-titel, der vises i browserens fane -->
+</head>
+<body>
+
+<h1>Rediger bruger</h1>
+<!-- Overskrift for siden -->
+
+<!-- Formular for redigering af userdata. Thymeleaf bruges til at binde formularfeltet til det eksisterende userobjekt. -->
+<form action ="#" th:action="@{/createUser}" th:object="${user}" method = "post">
+    <!-- Skjult felt for user-ID, som ikke behøver at blive ændret af brugeren -->
+    <input type="hidden" th:field="*{userId}" />
+
+    <!-- Inputfelt for brugernavn -->
+    <label for="username">Username:</label>
+    <input type="text" id="username" th:field="*{username}" />
+
+    <!-- Inputfelt for brugerens kodeord -->
+    <label for="password">Password:</label>
+    <input type="text" id="password" th:field="*{password}" />
+
+    <!-- Inputfelt for brugerens email  -->
+    <label for="email">Email:</label>
+    <input type="text" id="email" th:field="*{email}" />
+
+    <!-- Inputfelt for brugerens telefonnummer -->
+    <label for="phonenumber">Phonenumber:</label>
+    <input type="text" id="phonenumber" th:field="*{phonenumber}" />
+
+
+
+    <!-- Submit-knap for at gemme de redigerede oplysninger -->
+    <button type="submit">Opdater</button>
+</form>
+
+<!-- Link til at vende tilbage til listen over brugere -->
+<a href="/">Tilbage til listen</a>
+
+</body>
+</html>

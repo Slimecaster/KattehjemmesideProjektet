@@ -68,7 +68,7 @@ public class KattehjemmesideRepository {
     }
 
     public Optional<Cat> findCatByCatId(Long id){
-        sql= "select * from cat where id=?";
+        sql= "SELECT * FROM cat WHERE catId=?";
         Cat cat= jdbcTemplate.queryForObject(sql,new Object[]{id},catRowMapper());
         return Optional.ofNullable(cat);
     }
@@ -98,7 +98,7 @@ public class KattehjemmesideRepository {
             cat.setName(rs.getString("name"));
             cat.setAge(rs.getInt("age"));
             cat.setWeight(rs.getDouble("weight"));
-            cat.setOwner(rs.getInt("owner"));
+            cat.setOwner(rs.getLong("owner"));
             return cat;
         };
     }

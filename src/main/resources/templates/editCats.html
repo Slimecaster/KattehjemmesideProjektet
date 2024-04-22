@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rediger kat</title>
+    <!-- Side-titel, der vises i browserens fane -->
+</head>
+<body>
+
+<h1>Rediger kat</h1>
+<!-- Overskrift for siden -->
+
+<!-- Formular for redigering af sprogdata. Thymeleaf bruges til at binde formularfeltet til det eksisterende sprogobjekt. -->
+<form action="#" th:action="@{/createCat}" th:object="${cat}" method="post">
+    <!-- Skjult felt for sprog-ID, som ikke behøver at blive ændret af brugeren -->
+    <input type="hidden" th:field="*{catId}" />
+
+    <!-- Inputfelt for navnet på programmeringssproget -->
+    <label for="race">Race:</label>
+    <input type="text" id="race" th:field="*{race}" />
+
+    <!-- Inputfelt for udgivelsesåret for programmeringssproget -->
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" />
+
+    <!-- Inputfelt for skaberen af programmeringssproget -->
+    <label for="age">Age:</label>
+    <input type="text" id="age" th:field="*{age}" />
+
+    <!-- Inputfelt for paradigmet af programmeringssproget -->
+    <label for="weight">Weight:</label>
+    <input type="text" id="weight" th:field="*{weight}" />
+
+    <!-- Inputfelt for paradigmet af programmeringssproget -->
+    <label for="owner">Owner:</label>
+    <input type="number" id="owner" th:field="*{owner}" />
+
+
+    <!-- Submit-knap for at gemme de redigerede oplysninger -->
+    <button type="submit">Opdater</button>
+</form>
+
+<!-- Link til at vende tilbage til listen over programmeringssprog -->
+<a href="/">Tilbage til listen</a>
+
+</body>
+</html>

@@ -7,7 +7,7 @@
 <body>
 <h1>opret en ny kat</h1>
 
-<form action ="#" th:action="@{/createCat}" th:object="${createCat}" method = "post">
+<form action ="#" th:action="@{/createCat}" th:object="${cat}" method = "post">
 
     <label for="owner">Owner:</label>
     <input type="number" id="owner" th:field="*{owner}"/>

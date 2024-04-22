@@ -1,51 +1,101 @@
 <!-- Denne HTML-fil anvender Thymeleaf-template engine for at gøre det muligt at integrere
-dynamiske data (som en liste over programmeringssprog) ind i HTML -->
+
+dynamiske data (som en liste over katte) ind i HTML -->
+
+
 
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="UTF-8">
+
     <title>Liste over katte</title>
+
     <!-- Grundlæggende opsætning med meta-tag og titel -->
+
 </head>
+
 <body>
+
+
 
 <h1>Katte</h1>
 
-<!-- Link til at tilføje et nyt sprog -->
+
+
+<!-- Link til at tilføje en ny kat -->
+
 <a href="/createCat">Tilføj ny kat</a>
 
-<!-- Starten af tabellen for at vise programmeringssprog -->
+
+
+<!-- Starten af tabellen for at vise katte -->
+
 <table>
+
     <thead>
+
     <tr>
+
         <!-- Kolonneoverskrifter for tabellen -->
+
         <th>Race</th>
+
         <th>Navn</th>
+
         <th>Alder</th>
+
         <th>Vægt</th>
+
         <th>Ejer</th>
 
+        <th>Handlinger</th>
+
     </tr>
+
     </thead>
+
     <tbody>
-    <!-- Iterer gennem sprogliste og vis hver sprog -->
+
+    <!-- Itererer gennem katteliste og viser hver kat -->
+
     <tr th:each="cat : ${cats}">
-        <!-- Viser værdier for hvert sprog fra listen -->
+
+        <!-- Viser værdier for hver kat fra listen -->
+
         <td th:text="${cat.race}">Race</td>
+
         <td th:text="${cat.name}">Navn</td>
+
         <td th:text="${cat.age}">Alder</td>
+
         <td th:text="${cat.weight}">Vægt</td>
+
         <td th:text="${cat.owner}">Ejer</td>
+
         <td>
-            <!-- Link til at redigere et sprog -->
-            <a th:href="@{/language/edit/{id}(id=${language.id})}">Rediger</a>
-            <!-- Link til at slette et sprog -->
-            <a th:href="@{/language/delete/{id}(id=${language.id})}" onclick="return confirm('Er du sikker på, at du vil slette dette sprog?');">Slet</a>
+
+            <!-- Link til at redigere en kat -->
+
+            <a th:href="@{/edit/{catId}(catId=${cat.catId})}">Rediger</a>
+
+            <!-- Link til at slette en kat -->
+
+            <a th:href="@{/delete/{catId}(catId=${cat.catId})}" onclick="return confirm('Er du sikker på, at du vil slette denne kat?');">Slet</a>
+
         </td>
+
     </tr>
+
     </tbody>
+
 </table>
 
+
+
 </body>
+
 </html>

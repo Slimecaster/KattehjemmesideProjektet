@@ -30,10 +30,12 @@ public class KattehjemmesideRepository {
     }
 
     public Cat createCat (Cat cat) {
+        System.out.println(cat);
         if (cat.getCatId()==null) {
             sql= "INSERT INTO cat(race,name,age,weight,owner) VALUES (?,?,?,?,?)";
             jdbcTemplate.update(sql,cat.getRace(),cat.getName(),cat.getAge(),cat.getWeight(),cat.getOwner());
         } else {
+            System.out.println(cat);
             sql = "UPDATE cat SET race=?,name=?,age=?,weight=? WHERE catId=?";
             jdbcTemplate.update(sql, cat.getRace(), cat.getName(), cat.getAge(), cat.getWeight(), cat.getOwner());
         }

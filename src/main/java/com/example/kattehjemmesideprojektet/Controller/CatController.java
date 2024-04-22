@@ -29,7 +29,6 @@ public class CatController {
     @GetMapping("/")
     public String showAllCats(Model model) {
         model.addAttribute("cats", kattehjemmesideService.findAllCats());
-        System.out.println(kattehjemmesideService.findAllCats());
         return "index";
     }
 

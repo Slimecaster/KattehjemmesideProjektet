@@ -2,6 +2,7 @@ package com.example.kattehjemmesideprojektet.Repository;
 
 import com.example.kattehjemmesideprojektet.Model.Cat;
 import com.example.kattehjemmesideprojektet.Model.User;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -18,66 +19,147 @@ public class KattehjemmesideRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Creates a user or updates their information depending on whether the userId already exists
+     * @param user the user that will be created
+     * @return the user object created and stored in the database
+     * @throws DataAccessException if the user is not found in the database
+     */
+
     public User createUser (User user) {
-        if (user.getUserId()==null) {
-            sql= "INSERT INTO user(username,password,email,phoneNumber) VALUES (?,?,?,?)";
-            jdbcTemplate.update(sql,user.getUsername(),user.getPassword(),user.getEmail(),user.getPhoneNumber());
-        } else {
-            sql = "update user set username=?,password=?,email=?,phoneNumber=? where userId=?";
-            jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getPhoneNumber());
+        try {
+            if (user.getUserId() == null) {
+                sql = "INSERT INTO user(username,password,email,phoneNumber) VALUES (?,?,?,?)";
+                jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getPhoneNumber());
+            } else {
+                sql = "update user set username=?,password=?,email=?,phoneNumber=? where userId=?";
+                jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getPhoneNumber());
+            }
+            return user;
+        } catch(DataAccessException e){
+            throw new RuntimeException("Error accessing data while creating user",e);
         }
-        return user;
     }
 
+    /**
+     * Creates a cat or updates its information depending on whether the catId already exists
+     * @param cat the cat that will be created
+     * @return the cat object created and stored in the database
+     * @throws DataAccessException if the cat is not found in the database
+     */
     public Cat createCat (Cat cat) {
-        System.out.println(cat);
-        if (cat.getCatId()==null) {
-            sql= "INSERT INTO cat(race,name,age,weight,owner) VALUES (?,?,?,?,?)";
-            jdbcTemplate.update(sql,cat.getRace(),cat.getName(),cat.getAge(),cat.getWeight(),cat.getOwner());
-        } else {
-            System.out.println(cat);
-            sql = "UPDATE cat SET race=?,name=?,age=?,weight=? WHERE catId=?";
-            jdbcTemplate.update(sql, cat.getRace(), cat.getName(), cat.getAge(), cat.getWeight(), cat.getOwner());
+        try {
+            if (cat.getCatId() == null) {
+                sql = "INSERT INTO cat(race,name,age,weight,owner) VALUES (?,?,?,?,?)";
+                jdbcTemplate.update(sql, cat.getRace(), cat.getName(), cat.getAge(), cat.getWeight(), cat.getOwner());
+            } else {
+                sql = "update cat set race=?,name=?,age=?,weight=?,owner=? where catId=?";
+                jdbcTemplate.update(sql, cat.getRace(), cat.getName(), cat.getAge(), cat.getWeight(), cat.getOwner());
+            }
+            return cat;
+        } catch(DataAccessException e){
+            throw new RuntimeException("Error accessing data while creating cat",e);
         }
-        return cat;
     }
 
-    public void deleteUserById(Long id) {
-        sql = "delete from user where userId=?";
-        jdbcTemplate.update(sql,id);
+    /**
+     * Deletes a user by their userId
+     * @param userId the userId of the user that will be deleted
+     * @throws DataAccessException if the user is not found in the database
+     */
+    public void deleteUserById(Long userId) {
+        try {
+            sql = "delete from user where userId=?";
+            jdbcTemplate.update(sql,userId);
+        } catch(DataAccessException e){
+            throw new RuntimeException("Error accessing data while deleting user",e);
+        }
     }
 
-    public void deleteCatById(Long id) {
+    /**
+     * Deletes a cat by their catId
+     * @param catId the catId of the cat that will be deleted
+     */
+    public void deleteCatById(Long catId) {
         sql = "delete from cat where catId=?";
-        jdbcTemplate.update(sql,id);
+        jdbcTemplate.update(sql,catId);
     }
 
-    public Optional<User> findUserById(Long id){
-        sql= "select * from user where userId=?";
-        User user =jdbcTemplate.queryForObject(sql, new Object[]{id},userRowMapper());
-        return Optional.ofNullable(user);
+    /**
+     * Finds all information about a user by their userId
+     * @param userId the userId of the user that will be found
+     * @return the user and all their information
+     * @throws DataAccessException if the user is not found
+     */
+    public Optional<User> findUserById(Long userId){
+        try {
+            sql= "select * from user where userId=?";
+            User user =jdbcTemplate.queryForObject(sql, new Object[]{userId},userRowMapper());
+            return Optional.ofNullable(user);
+        }catch(DataAccessException e){
+            throw new RuntimeException("Error accessing data while finding user",e);
+        }
     }
 
+    /**
+     * Finds a list of all users and their information in the database
+     * @return a list of all information about all users in the database
+     * @throws DataAccessException if the users are not found
+     */
     public List<User> findAllUsers(){
-        sql= "select * from user";
-        return jdbcTemplate.query(sql, userRowMapper());
+        try {
+            sql = "select * from user";
+            return jdbcTemplate.query(sql, userRowMapper());
+        }catch(DataAccessException e){
+            throw new RuntimeException("Error accessing data while finding all users",e);
+        }
     }
 
-    public Optional<Cat> findCatByUser(Long id){
-        sql="SELECT * from cat inner join user on cat.owner = user.userId where userId=?";
-        Cat cat=jdbcTemplate.queryForObject(sql,new Object[]{id},catRowMapper());
-        return Optional.ofNullable(cat);
+    /**
+     * Finds all information about a cat by their owners userId
+     * @param userId the userId of the user that owns the cat
+     * @return all information about the found cat
+     * @throws DataAccessException if the cat is not found
+     */
+    public Optional<Cat> findCatByUser(Long userId){
+        try {
+            sql = "SELECT * from cat inner join user on cat.owner = user.userId where userId=?";
+            Cat cat = jdbcTemplate.queryForObject(sql, new Object[]{userId}, catRowMapper());
+            return Optional.ofNullable(cat);
+        }catch(DataAccessException e){
+            throw new RuntimeException("Error accessing data while finding cat by their user",e);
+        }
     }
 
-    public Optional<Cat> findCatByCatId(Long id){
-        sql= "SELECT * FROM cat WHERE catId=?";
-        Cat cat= jdbcTemplate.queryForObject(sql,new Object[]{id},catRowMapper());
-        return Optional.ofNullable(cat);
+    /**
+     * Finds all information about a cat by its own catId
+     * @param catId the catId of the cat that will be found
+     * @return the cat found by their own id
+     * @throws DataAccessException if the cat is not found
+     */
+    public Optional<Cat> findCatByCatId(Long catId){
+        try {
+            sql= "SELECT * FROM cat WHERE catId=?";
+            Cat cat= jdbcTemplate.queryForObject(sql,new Object[]{catId},catRowMapper());
+            return Optional.ofNullable(cat);
+        }catch(DataAccessException e){
+            throw new RuntimeException("Error accessing data while finding cat",e);
+        }
+
     }
 
+    /**
+     * Finds all cats and all their information
+     * @return a list of all cats with their information
+     * @throws DataAccessException if the cats are not found
+     */
     public List<Cat> findAllCats(){
-        sql= "select * from cat";
-        return jdbcTemplate.query(sql, catRowMapper());
+        try {
+            sql = "select * from cat";
+            return jdbcTemplate.query(sql, catRowMapper());
+        }catch(DataAccessException e){
+            throw new RuntimeException("Error accessing data while finding all cats",e);
+        }
     }
 
 

@@ -6,13 +6,13 @@ public class Cat {
     private String name;
     private int age;
     private double weight;
-    private int owner;
+    private Long owner;
 
 
     public Cat() {
     }
 
-    public Cat(Long catId, String race, String name, int age, double weight, int owner) {
+    public Cat(Long catId, String race, String name, int age, double weight, Long owner) {
         this.catId = catId;
         this.race = race;
         this.name = name;
@@ -61,11 +61,11 @@ public class Cat {
         this.weight = weight;
     }
 
-    public int getOwner() {
+    public Long getOwner() {
         return owner;
     }
 
-    public void setOwner(int owner) {
+    public void setOwner(Long owner) {
         this.owner = owner;
     }
 

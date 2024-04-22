@@ -32,7 +32,7 @@ public class KattehjemmesideRepository {
                 sql = "INSERT INTO user(username,password,email,phoneNumber) VALUES (?,?,?,?)";
                 jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getPhoneNumber());
             } else {
-                sql = "update user set username=?,password=?,email=?,phoneNumber=? where userId=?";
+                sql = "update user set username=?,password=?,email=?,phoneNumber=? where userId="+String.valueOf(user.getUserId());
                 jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getPhoneNumber());
             }
             return user;
@@ -53,7 +53,7 @@ public class KattehjemmesideRepository {
                 sql = "INSERT INTO cat(race,name,age,weight,owner) VALUES (?,?,?,?,?)";
                 jdbcTemplate.update(sql, cat.getRace(), cat.getName(), cat.getAge(), cat.getWeight(), cat.getOwner());
             } else {
-                sql = "update cat set race=?,name=?,age=?,weight=?,owner=? where catId=?";
+                sql = "update cat set race=?,name=?,age=?,weight=?,owner=? where catId="+String.valueOf(cat.getCatId());
                 jdbcTemplate.update(sql, cat.getRace(), cat.getName(), cat.getAge(), cat.getWeight(), cat.getOwner());
             }
             return cat;

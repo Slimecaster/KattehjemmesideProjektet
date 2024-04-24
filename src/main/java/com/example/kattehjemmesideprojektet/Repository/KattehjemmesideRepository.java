@@ -99,7 +99,7 @@ public class KattehjemmesideRepository {
             throw new RuntimeException("Error accessing data while finding user",e);
         }
     }
-
+    //Kommentar til github
     /**
      * Finds a user by their email
      * @param email

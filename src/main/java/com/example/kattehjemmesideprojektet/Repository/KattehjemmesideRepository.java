@@ -100,6 +100,12 @@ public class KattehjemmesideRepository {
         }
     }
 
+    /**
+     * Finds a user by their email
+     * @param email
+     * @return the user found
+     */
+
     public Optional<User> findUserByEmail(String email){
         try {
             sql= "select * from user where email=?";

@@ -3,6 +3,7 @@ package com.example.kattehjemmesideprojektet.Controller;
 import com.example.kattehjemmesideprojektet.Model.User;
 import com.example.kattehjemmesideprojektet.Service.KattehjemmesideService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +21,11 @@ public class UserController {
         model.addAttribute("user", new User());
         return "createUser";
     }
-    @PostMapping("/createUser")
+    /*@PostMapping("/createUser")
     public String createUser(@ModelAttribute User user){
         kattehjemmesideService.createUser(user);
         return "redirect:/";
-    }
+    }*/
 
     @GetMapping("/indexUser")
     public String showAllUsers(Model model) {
@@ -43,6 +44,16 @@ public class UserController {
         kattehjemmesideService.findUserById(userId).ifPresent(user -> model.addAttribute("user", user));
         return "editUsers";
     }
+
+    @PostMapping("/createUser")
+    public String processRegister(User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        kattehjemmesideService.createUser(user);
+        return "/menu";
+    }
+
 
 
 }

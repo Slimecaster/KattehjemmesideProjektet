@@ -1,9 +1,12 @@
 package com.example.kattehjemmesideprojektet.Service;
 
+import com.example.kattehjemmesideprojektet.CustomUserDetails;
 import com.example.kattehjemmesideprojektet.Model.Cat;
 import com.example.kattehjemmesideprojektet.Model.User;
 import com.example.kattehjemmesideprojektet.Repository.KattehjemmesideRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,4 +54,11 @@ public class KattehjemmesideService {
         return kattehjemmesideRepository.findAllCats();
     }
 
+    public UserDetails loadUserByUserId(Long userId) throws UsernameNotFoundException {
+        Optional<User> user = kattehjemmesideRepository.findUserById(userId);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return new CustomUserDetails(user);
+    }
 }

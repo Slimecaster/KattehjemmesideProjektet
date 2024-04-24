@@ -24,13 +24,13 @@ public class CatController {
     @PostMapping("/createCat")
     public String createCat(@ModelAttribute Cat cat){
         kattehjemmesideService.createCat(cat);
-        return "redirect:/";
+        return "redirect:/indexCats";
     }
 
-    @GetMapping("/")
+    @GetMapping("/indexCats")
     public String showAllCats(Model model) {
         model.addAttribute("cats", kattehjemmesideService.findAllCats());
-        return "index";
+        return "indexCats";
     }
 
     @GetMapping("/edit/{catId}")
@@ -42,7 +42,7 @@ public class CatController {
     @GetMapping("/delete/{catId}")
     public String deleteCat(@PathVariable Long catId) {
         kattehjemmesideService.deleteCatById(catId);
-        return "redirect:/";
+        return "redirect:/indexCats";
     }
 /*
     @GetMapping("/searchtest")
@@ -66,7 +66,7 @@ public class CatController {
     @GetMapping("/RandomTest")
     public String showCats(Long userId, Model model) {
         kattehjemmesideService.findCatByUser(userId).ifPresent(cat -> model.addAttribute("cat", cat));
-        return "index";
+        return "indexCats";
     }
 
 

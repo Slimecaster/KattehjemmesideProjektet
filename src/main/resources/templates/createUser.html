@@ -1,27 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>opret bruger</title>
+    <meta charset="ISO-8859-1">
+    <title>Sign Up - CodeJava</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>opret en ny bruger</h1>
+<div class="container text-center">
+    <div>
+        <h1>User Registration - Sign Up</h1>
+    </div>
+    <form th:action="@{/createUser}" th:object="${user}"
+          method="post" style="max-width: 600px; margin: 0 auto;">
+        <div class="m-3">
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Username: </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{username}" class="form-control" required />
+                </div>
+            </div>
 
-<form action ="#" th:action="@{/createUser}" th:object="${user}" method = "post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" th:field="*{username}"/>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Password: </label>
+                <div class="col-8">
+                    <input type="password" th:field="*{password}" class="form-control"
+                           required minlength="6" maxlength="10"/>
+                </div>
+            </div>
 
-    <label for="password">Password:</label>
-    <input type="text" id="password" th:field="*{password}"/>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Email: </label>
+                <div class="col-8">
+                    <input type="email" th:field="*{email}" class="form-control"
+                           required minlength="2" maxlength="45"/>
+                </div>
+            </div>
 
-    <label for="email">Email:</label>
-    <input type="text" id="email" th:field="*{email}"/>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Phone Number: </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{phoneNumber}" class="form-control"
+                           required minlength="2" maxlength="15" />
+                </div>
+            </div>
 
-    <label for="phoneNumber">PhoneNumber:</label>
-    <input type="text" id="phoneNumber" th:field="*{phoneNumber}"/>
-
-    <button type="submit">Opret</button>
-</form>
-<a href="/indexUser">Tilbage til listen</a>
+            <div>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>

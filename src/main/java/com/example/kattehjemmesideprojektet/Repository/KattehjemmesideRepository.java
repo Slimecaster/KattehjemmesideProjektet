@@ -100,6 +100,16 @@ public class KattehjemmesideRepository {
         }
     }
 
+    public Optional<User> findUserByEmail(String email){
+        try {
+            sql= "select * from user where email=?";
+            User user =jdbcTemplate.queryForObject(sql, new Object[]{email},userRowMapper());
+            return Optional.ofNullable(user);
+        }catch(DataAccessException e){
+            throw new RuntimeException("Error accessing data while finding user",e);
+        }
+    }
+
     /**
      * Finds a list of all users and their information in the database
      * @return a list of all information about all users in the database
@@ -186,5 +196,8 @@ public class KattehjemmesideRepository {
             return cat;
         };
     }
+
+
+
 
 }

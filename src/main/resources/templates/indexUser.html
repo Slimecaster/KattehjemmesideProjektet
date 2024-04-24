@@ -1,0 +1,96 @@
+<!-- Denne HTML-fil anvender Thymeleaf-template engine for at gøre det muligt at integrere
+
+dynamiske data (som en liste over katte) ind i HTML -->
+
+
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Liste over brugere</title>
+
+    <!-- Grundlæggende opsætning med meta-tag og titel -->
+
+</head>
+
+<body>
+
+
+
+<h1>Brugere</h1>
+
+
+
+<!-- Link til at tilføje en ny kat -->
+
+<a href="/createUser">Tilføj ny bruger</a>
+
+
+
+<!-- Starten af tabellen for at vise bruger -->
+
+<table>
+
+    <thead>
+
+    <tr>
+
+        <!-- Kolonneoverskrifter for tabellen -->
+
+        <th>| Brugernavn </th>
+
+        <th> Email </th>
+
+        <th> Telefonnummer |</th>
+
+
+
+
+
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <!-- Itererer gennem katteliste og viser hver kat -->
+
+    <tr th:each="user : ${users}">
+
+        <!-- Viser værdier for hver bruger fra listen -->
+
+        <td th:text="${user.username}">Brugernavn</td>
+
+        <td th:text="${user.email}">Email</td>
+
+        <td th:text="${user.phoneNumber}">Telefonnummer</td>
+
+
+        <td>
+
+            <!-- Link til at redigere en bruger -->
+
+            <a th:href="@{/indexUser/edit/{userId}(userId=${user.userId})}">Rediger</a>
+
+            <!-- Link til at slette en bruger -->
+
+            <a th:href="@{/indexUser/delete/{userId}(userId=${user.userId})}" onclick="return confirm('Er du sikker på, at du vil slette denne bruger?');">Slet</a>
+
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+<a href="/menu">Tilbage til menuen</a>
+
+</body>
+
+</html>

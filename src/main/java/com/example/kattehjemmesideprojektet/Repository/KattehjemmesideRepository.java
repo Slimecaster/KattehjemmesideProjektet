@@ -3,6 +3,7 @@ package com.example.kattehjemmesideprojektet.Repository;
 import com.example.kattehjemmesideprojektet.Model.Cat;
 import com.example.kattehjemmesideprojektet.Model.User;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -63,18 +64,16 @@ public class KattehjemmesideRepository {
     }
 
     /**
-     * Deletes a user by their userId
+     * Deletes a user and their cats by their userId
      * @param userId the userId of the user that will be deleted
-     * @throws DataAccessException if the user is not found in the database
      */
     public void deleteUserById(Long userId) {
-        try {
-            sql = "delete from user where userId=?";
-            jdbcTemplate.update(sql,userId);
-        } catch(DataAccessException e){
-            throw new RuntimeException("Error accessing data while deleting user",e);
-        }
+        sql = "delete from user where userId =?";
+        // sql = "DELETE user, cat FROM user INNER JOIN cat WHERE user.userId= cat.owner AND user.userId=?";
+        jdbcTemplate.update(sql,userId);
     }
+
+
 
     /**
      * Deletes a cat by their catId
@@ -137,15 +136,16 @@ public class KattehjemmesideRepository {
      * @return the cat found by their own id
      * @throws DataAccessException if the cat is not found
      */
-    public Optional<Cat> findCatByCatId(Long catId){
+    public Optional<Cat> findCatById(Long catId){
         try {
-            sql= "SELECT * FROM cat WHERE catId=?";
-            Cat cat= jdbcTemplate.queryForObject(sql,new Object[]{catId},catRowMapper());
+            sql = "SELECT * FROM cat WHERE catId=?";
+            Cat cat = jdbcTemplate.queryForObject(sql, new Object[]{catId}, catRowMapper());
             return Optional.ofNullable(cat);
-        }catch(DataAccessException e){
-            throw new RuntimeException("Error accessing data while finding cat",e);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty(); // Return empty Optional if no cat is found
+        } catch(DataAccessException e){
+            throw new RuntimeException("Error accessing data while finding cat", e);
         }
-
     }
 
     /**

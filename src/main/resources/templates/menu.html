@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <button type="button" onclick=href="\"/createUser\"">Click Me!</button>
+    <title>Menu</title>
 </head>
 <body>
-<form action="#" method="post" th:action="@{/menu}" th:object="${menu}">
-    <button type="button" onclick=href="/createUser">Opret en ny kat!</button>
-</form>
+<div class="container text-center">
+    <h1>Velkommen til endnu en kattehjemmeside :)</h1>
+    <h3><a th:href="@{/indexUser}">Se brugere</a></h3>
+    <h3><a th:href="@{/}">Se katte</a></h3>
+</div>
 </body>
 </html>

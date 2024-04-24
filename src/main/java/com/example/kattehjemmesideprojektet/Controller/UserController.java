@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -25,6 +26,23 @@ public class UserController {
         return "redirect:/";
     }
 
+    @GetMapping("/indexUser")
+    public String showAllUsers(Model model) {
+        model.addAttribute("users", kattehjemmesideService.findAllUsers());
+        return "indexUser";
+    }
+
+    @GetMapping("/indexUser/delete/{userId}")
+    public String deleteUser(@PathVariable Long userId) {
+        kattehjemmesideService.deleteUserById(userId);
+        return "redirect:/indexUser";
+    }
+
+    @GetMapping("/indexUser/edit/{userId}")
+    public String showEditForm(@PathVariable Long userId, Model model) {
+        kattehjemmesideService.findUserById(userId).ifPresent(user -> model.addAttribute("user", user));
+        return "editUsers";
+    }
 
 
 }

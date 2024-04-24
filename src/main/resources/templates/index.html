@@ -80,9 +80,7 @@ dynamiske data (som en liste over katte) ind i HTML -->
 
             <!-- Link til at redigere en kat -->
 
-            <a th:href="@{/edit/{catId}(catId=${cat.catId})}">Rediger</a>
-
-            <!-- Link til at slette en kat -->
+            <a th:href="@{/edit/{catId}(catId=${cat.catId})}">Rediger</a> <!-- Link til at slette en kat -->
 
             <a th:href="@{/delete/{catId}(catId=${cat.catId})}" onclick="return confirm('Er du sikker på, at du vil slette denne kat?');">Slet</a>
 
@@ -94,7 +92,7 @@ dynamiske data (som en liste over katte) ind i HTML -->
 
 </table>
 
-
+<a href="/menu">Tilbage til menuen</a>
 
 </body>
 

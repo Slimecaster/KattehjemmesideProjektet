@@ -1,6 +1,7 @@
 package com.example.kattehjemmesideprojektet.Controller;
 
 import com.example.kattehjemmesideprojektet.Model.Cat;
+import com.example.kattehjemmesideprojektet.Model.User;
 import com.example.kattehjemmesideprojektet.Service.KattehjemmesideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,5 +44,30 @@ public class CatController {
         kattehjemmesideService.deleteCatById(catId);
         return "redirect:/";
     }
+/*
+    @GetMapping("/searchtest")
+    public String showCat(Long catId, Model model) {
+        kattehjemmesideService.findCatById(catId).ifPresent(cat -> model.addAttribute("cat", cat));
+        return "search-form";
+    }
+
+ */
+
+    @GetMapping("/searchtest")
+    public String showCat(@RequestParam(required = false) Long catId, Model model, Cat c) {
+        if (catId != null) {
+            Optional<Cat> catOptional = kattehjemmesideService.findCatById(catId);
+            catOptional.ifPresent(cat -> model.addAttribute("cat", cat));
+            model.addAttribute("catFound", catOptional.isPresent()); // Add attribute indicating if cat was found
+        }
+        return "search-form";
+    }
+
+    @GetMapping("/RandomTest")
+    public String showCats(Long userId, Model model) {
+        kattehjemmesideService.findCatByUser(userId).ifPresent(cat -> model.addAttribute("cat", cat));
+        return "index";
+    }
+
 
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Result</title>
+</head>
+<body>
+<h2>Search Cat by UserId</h2>
+<form action="#" th:action="@{/searchCatByUserId}" method="get">
+    <label for="userId">User ID:</label>
+    <input type="text" id="userId" name="userId" />
+    <button type="submit">Search</button>
+</form>
+
+<h2>Search Result</h2>
+<div th:if="${cat != null}">
+    <p>Race: <span th:text="${cat.race}"></span></p>
+    <p>Name: <span th:text="${cat.name}"></span></p>
+    <p>Age: <span th:text="${cat.age}"></span></p>
+    <p>Weight: <span th:text="${cat.weight}"></span></p>
+    <p>Owner ID: <span th:text="${cat.owner}"></span></p>
+    <!-- You can display more cat details here -->
+</div>
+<!-- Display message if cat not found -->
+<div th:unless="${catFound}">
+    <p>No cat found with the given userID.</p>
+</div>
+</body>
+</html>

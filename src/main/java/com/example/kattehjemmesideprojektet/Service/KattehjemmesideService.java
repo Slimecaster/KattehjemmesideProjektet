@@ -32,7 +32,7 @@ public class KattehjemmesideService {
         kattehjemmesideRepository.deleteCatById(id);
     }
 
-    public Optional<User> findUserById(User user, Long id){
+    public Optional<User> findUserById(Long id){
         return kattehjemmesideRepository.findUserById(id);
     }
     public List<User> findAllUsers(){
@@ -44,7 +44,7 @@ public class KattehjemmesideService {
     }
 
     public Optional<Cat> findCatById(Long id){
-        return kattehjemmesideRepository.findCatByCatId(id);
+        return kattehjemmesideRepository.findCatById(id);
     }
 
     public List<Cat> findAllCats(){

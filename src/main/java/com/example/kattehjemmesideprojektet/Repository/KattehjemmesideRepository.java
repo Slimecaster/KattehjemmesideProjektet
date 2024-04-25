@@ -13,13 +13,14 @@ import java.util.Optional;
 
 @Repository
 public class KattehjemmesideRepository {
-    private final JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
     String sql;
+
+
 
     public KattehjemmesideRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
     /**
      * Creates a user or updates their information depending on whether the userId already exists
      * @param user the user that will be created
@@ -49,7 +50,6 @@ public class KattehjemmesideRepository {
      * @throws DataAccessException if the cat is not found in the database
      */
     public Cat createCat (Cat cat) {
-        try {
             if (cat.getCatId() == null) {
                 sql = "INSERT INTO cat(race,name,age,weight,owner) VALUES (?,?,?,?,?)";
                 jdbcTemplate.update(sql, cat.getRace(), cat.getName(), cat.getAge(), cat.getWeight(), cat.getOwner());
@@ -58,9 +58,7 @@ public class KattehjemmesideRepository {
                 jdbcTemplate.update(sql, cat.getRace(), cat.getName(), cat.getAge(), cat.getWeight(), cat.getOwner());
             }
             return cat;
-        } catch(DataAccessException e){
-            throw new RuntimeException("Error accessing data while creating cat",e);
-        }
+
     }
 
     /**
@@ -90,13 +88,16 @@ public class KattehjemmesideRepository {
      * @return the user and all their information
      * @throws DataAccessException if the user is not found
      */
+
     public Optional<User> findUserById(Long userId){
         try {
-            sql= "select * from user where userId=?";
-            User user =jdbcTemplate.queryForObject(sql, new Object[]{userId},userRowMapper());
+            sql = "SELECT * FROM user WHERE userId=?";
+            User user = jdbcTemplate.queryForObject(sql, new Object[]{userId}, userRowMapper());
             return Optional.ofNullable(user);
-        }catch(DataAccessException e){
-            throw new RuntimeException("Error accessing data while finding user",e);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty(); // Return empty Optional if no user is found
+        } catch(DataAccessException e){
+            throw new RuntimeException("Error accessing data while finding user", e);
         }
     }
 
@@ -120,13 +121,14 @@ public class KattehjemmesideRepository {
      * @return all information about the found cat
      * @throws DataAccessException if the cat is not found
      */
-    public Optional<Cat> findCatByUser(Long userId){
+    public List<Cat> findCatsByUser(Long userId) {
         try {
-            sql = "SELECT * from cat inner join user on cat.owner = user.userId where userId=?";
-            Cat cat = jdbcTemplate.queryForObject(sql, new Object[]{userId}, catRowMapper());
-            return Optional.ofNullable(cat);
-        }catch(DataAccessException e){
-            throw new RuntimeException("Error accessing data while finding cat by their user",e);
+            String sql = "SELECT * FROM cat WHERE owner = ?";
+            return jdbcTemplate.query(sql, new Object[]{userId}, catRowMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return List.of(); // Return an empty list if no cats are found
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Error accessing data while finding cats by user", e);
         }
     }
 

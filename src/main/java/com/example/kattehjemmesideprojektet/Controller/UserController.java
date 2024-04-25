@@ -5,10 +5,9 @@ import com.example.kattehjemmesideprojektet.Service.KattehjemmesideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -23,9 +22,19 @@ public class UserController {
     @PostMapping("/createUser")
     public String createUser(@ModelAttribute User user){
         kattehjemmesideService.createUser(user);
-        return "redirect:/";
+        return "redirect:/userCreatedSucces";
+    }
+    @GetMapping("/")
+    public String loginForm(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
     }
 
+    @GetMapping("/userCreatedSucces")
+    public String userCreatedSucces(Model model) {
+        model.addAttribute("user", new User());
+        return "userCreatedSucces";
+    }
 
     @GetMapping("/indexUser")
     public String showAllUsers(Model model) {
@@ -45,12 +54,16 @@ public class UserController {
         return "editUsers";
     }
 
-    @GetMapping("/")
 
-    public String loginForm(Model model) {
-        model.addAttribute("user", new User());
-        return "login";
 
+    @GetMapping("/searchtestUser")
+    public String showUser(@RequestParam(required = false) Long userId, Model model, User u) {
+        if (userId != null) {
+            Optional<User> userOptional = kattehjemmesideService.findUserById(userId);
+            userOptional.ifPresent(user -> model.addAttribute("user", user));
+            model.addAttribute("userFound", userOptional.isPresent()); // Add attribute indicating if user was found
+        }
+        return "searchUser";
     }
 
 

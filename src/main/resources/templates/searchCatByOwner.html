@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Result</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h2>Search Cat by UserId</h2>
+<form action="#" th:action="@{/searchCatByOwner}" method="get">
+    <label for="owner">User ID:</label>
+    <input type="text" id="owner" name="owner" />
+    <button type="submit">Search</button>
+</form>
+
+<h2>Search Result</h2>
+
+<!-- Display message if cat not found -->
+<div th:unless="${catFound}">
+    <p>No cat found with the given owner.</p>
+</div>
+
+<!-- Display table if cat found -->
+<div th:if="${catFound}">
+    <table>
+        <tr>
+            <th>Race</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Weight</th>
+            <th>Owner ID</th>
+        </tr>
+       <!-- <tr>
+            <td th:text="${cat.race}"></td>
+            <td th:text="${cat.name}"></td>
+            <td th:text="${cat.age}"></td>
+            <td th:text="${cat.weight}"></td>
+            <td th:text="${cat.owner}"></td>
+        </tr>
+        <If there are multiple cats, you can iterate over them here -->
+         <tr th:each="cat : ${cats}">
+            <td th:text="${cat.race}"></td>
+            <td th:text="${cat.name}"></td>
+            <td th:text="${cat.age}"></td>
+            <td th:text="${cat.weight}"></td>
+            <td th:text="${cat.owner}"></td>
+        </tr>
+    </table>
+</div>
+<button onclick="window.location.href='/menu'">Back to Menu</button>
+</body>
+</html>

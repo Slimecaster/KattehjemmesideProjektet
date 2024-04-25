@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -42,17 +43,10 @@ public class CatController {
         kattehjemmesideService.deleteCatById(catId);
         return "redirect:/indexCats";
     }
-/*
-    @GetMapping("/searchtest")
-    public String showCat(Long catId, Model model) {
-        kattehjemmesideService.findCatById(catId).ifPresent(cat -> model.addAttribute("cat", cat));
-        return "search-form";
-    }
 
- */
 
-    @GetMapping("/searchtest")
-    public String showCat(@RequestParam(required = false) Long catId, Model model, Cat c) {
+    @GetMapping("/earchCatById")
+    public String showCat(@RequestParam(required = false) Long catId, Model model) {
         if (catId != null) {
             Optional<Cat> catOptional = kattehjemmesideService.findCatById(catId);
             catOptional.ifPresent(cat -> model.addAttribute("cat", cat));
@@ -61,11 +55,14 @@ public class CatController {
         return "search-form";
     }
 
-    @GetMapping("/RandomTest")
-    public String showCats(Long userId, Model model) {
-        kattehjemmesideService.findCatByUser(userId).ifPresent(cat -> model.addAttribute("cat", cat));
-        return "indexCats";
+    @GetMapping("/searchCatByOwner")
+    public String showCatsByOwner(@RequestParam(required = false) Long owner, Model model) {
+        if (owner != null) {
+            List<Cat> cats = kattehjemmesideService.findCatsByUser(owner);
+            model.addAttribute("cats", cats);
+            model.addAttribute("catFound", !cats.isEmpty()); // Add attribute indicating if cats were found
+        }
+        return "searchCatByOwner";
     }
-
 
 }

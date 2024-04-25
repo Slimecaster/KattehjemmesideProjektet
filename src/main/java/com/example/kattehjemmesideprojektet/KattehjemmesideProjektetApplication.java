@@ -12,6 +12,7 @@ public class KattehjemmesideProjektetApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(KattehjemmesideProjektetApplication.class, args);
+
     }
 
 }

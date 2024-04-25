@@ -31,6 +31,8 @@
     <label for="weight">Weight:</label>
     <input type="text" id="weight" th:field="*{weight}" />
 
+    <input type="hidden" th:field="*{owner}" />
+
 
 
     <!-- Submit-knap for at gemme de redigerede oplysninger -->
@@ -38,7 +40,7 @@
 </form>
 
 <!-- Link til at vende tilbage til listen over katte -->
-<a href="/">Tilbage til listen</a>
+<a href="/indexCats">Tilbage til listen</a>
 
 </body>
 </html>

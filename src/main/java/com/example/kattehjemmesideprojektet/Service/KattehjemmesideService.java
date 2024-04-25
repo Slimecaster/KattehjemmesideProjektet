@@ -39,8 +39,8 @@ public class KattehjemmesideService {
         return kattehjemmesideRepository.findAllUsers();
     }
 
-    public Optional<Cat> findCatByUser(Long id){
-        return kattehjemmesideRepository.findCatByUser(id);
+    public List<Cat> findCatsByUser(Long id){
+        return kattehjemmesideRepository.findCatsByUser(id);
     }
 
     public Optional<Cat> findCatById(Long id){

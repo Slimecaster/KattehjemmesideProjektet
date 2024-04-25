@@ -3,12 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Menu</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .button-container .button {
+            margin-bottom: 20px;
+        }
+
+        .button-container button {
+            padding: 15px 30px; /* Adjust button padding for larger size */
+            font-size: 16px; /* Adjust font size */
+        }
+    </style>
 </head>
 <body>
 <div class="container text-center">
     <h1>Velkommen til endnu en kattehjemmeside :)</h1>
-    <h3><a th:href="@{/indexUser}">Se brugere</a></h3>
-    <h3><a th:href="@{/}">Se katte</a></h3>
+    <div class="button-container">
+        <div class="button">
+            <a th:href="@{/indexUser}">
+                <button type="button">Se brugere</button>
+            </a>
+        </div>
+        <div class="button">
+            <a th:href="@{/indexCats}">
+                <button type="button">Se katte</button>
+            </a>
+        </div>
+        <div class="button">
+            <a th:href="@{/searchCatByOwner}">
+                <button type="button">Søg efter Kat</button>
+            </a>
+        </div>
+        <div class="button">
+            <a th:href="@{/}">
+                <button type="button">Log ud</button>
+            </a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

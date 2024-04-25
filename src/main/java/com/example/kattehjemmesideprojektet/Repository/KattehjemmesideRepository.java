@@ -187,4 +187,14 @@ public class KattehjemmesideRepository {
         };
     }
 
+    public Optional<User> findUserByUsernameAndPassword(String username, String password) {
+        try {
+            String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+            User user = jdbcTemplate.queryForObject(sql, new Object[]{username, password}, userRowMapper());
+            return Optional.ofNullable(user);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty(); // Returner tomt Optional hvis ingen bruger er fundet
+        }
+    }
+
 }

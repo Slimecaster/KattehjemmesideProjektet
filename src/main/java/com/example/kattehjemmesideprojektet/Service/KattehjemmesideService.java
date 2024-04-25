@@ -51,4 +51,15 @@ public class KattehjemmesideService {
         return kattehjemmesideRepository.findAllCats();
     }
 
+    //Tilføjelse af autentifikationsmetode:
+    //Metoden .isPresent() i Java's Optional klasse er brugt til at tjekke,
+    // om der er en værdi til stede i Optional objektet.
+    // Denne metode returnerer en boolesk værdi—true hvis der er en værdi til stede, og false hvis Optional er tom
+
+    public boolean authenticateUser(String username, String password) {
+
+        return kattehjemmesideRepository.findUserByUsernameAndPassword(username, password).isPresent();
+
+    }
+
 }

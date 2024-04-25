@@ -26,6 +26,7 @@ public class UserController {
         return "redirect:/";
     }
 
+
     @GetMapping("/indexUser")
     public String showAllUsers(Model model) {
         model.addAttribute("users", kattehjemmesideService.findAllUsers());
@@ -44,6 +45,27 @@ public class UserController {
         return "editUsers";
     }
 
+    @GetMapping("/")
+
+    public String loginForm(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
+
+    }
+
+
+
+    @PostMapping("/login")
+
+    public String login(@ModelAttribute User user, Model model) {
+        boolean authenticated = kattehjemmesideService.authenticateUser(user.getUsername(), user.getPassword());
+        if (authenticated) {
+            return "redirect:/menu"; // Omled til hovedsiden hvis login er succesfuldt
+        } else {
+            model.addAttribute("error", "Ugyldigt brugernavn eller password");
+            return "login"; // Bliv på login siden hvis login fejler
+        }
+    }
 
 }
 
